@@ -24,7 +24,16 @@ export default function Hero(): ReactElement {
                 Jack Ryan
               </h1>
               <h2 className="text-3xl font-medium opacity-80 sm:text-3xl md:text-4xl xl:text-5xl">
-                Software Engineer at <a href="https://www.getzep.com" target="_blank" rel="noopener noreferrer" className="text-purple-500 hover:underline cursor-pointer">Zep AI</a>, ex-Stanford.
+                Software Engineer at{' '}
+                <a
+                  href="https://www.getzep.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-purple-500 hover:underline cursor-pointer"
+                >
+                  Zep AI
+                </a>
+                , ex-Stanford.
               </h2>
               <div className="flex flex-row space-x-4">
                 <Link
