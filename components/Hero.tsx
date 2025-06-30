@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { ReactElement, useEffect, useRef } from 'react';
-//import { HiOutlineArrowNarrowDown } from 'react-icons/hi';
 import { renderCanvas } from './renderCanvas';
 
 export default function Hero(): ReactElement {
