@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "contentlayer dev & next dev",
-    "build": "next build",
+    "build": "contentlayer build && next build",
     "rss": "cross-env NODE_OPTIONS='--experimental-json-modules' node ./scripts/generate-rss.mjs",
     "serve": "next start",
     "lint": "next lint --fix --dir pages --dir components --dir lib --dir layouts --dir scripts"
@@ -21,6 +21,7 @@
     "classnames": "2.3.2",
     "contentlayer": "0.3.4",
     "esbuild": "0.16.12",
+    "framer-motion": "^10.16.4",
     "gsap": "3.12.2",
     "next": "13.5.6",
     "next-contentlayer": "0.3.4",

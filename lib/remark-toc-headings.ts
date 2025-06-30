@@ -1,4 +1,4 @@
-import slugger from 'github-slugger';
+import { slug } from 'github-slugger';
 import { Heading } from 'mdast';
 import { toString } from 'mdast-util-to-string';
 import { remark } from 'remark';
@@ -14,7 +14,7 @@ export function remarkTocHeadings() {
       const textContent = toString(node);
       toc.push({
         value: textContent,
-        url: '#' + slugger.slug(textContent),
+        url: '#' + slug(textContent),
         depth: node.depth,
       });
     });
