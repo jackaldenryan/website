@@ -1,22 +1,12 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ReactElement, useContext, useEffect, useRef } from 'react';
+import { ReactElement, useEffect, useRef } from 'react';
 //import { HiOutlineArrowNarrowDown } from 'react-icons/hi';
-import { ScrollContext } from './Providers/ScrollProvider';
 import { renderCanvas } from './renderCanvas';
 
 export default function Hero(): ReactElement {
   const ref = useRef<HTMLHeadingElement>(null);
-  const { scrollY } = useContext(ScrollContext);
-
-  let progress = 0;
-  const { current: elContainer } = ref;
-
-  if (elContainer) {
-    progress = Math.min(1, scrollY / elContainer.clientHeight);
-  }
 
   useEffect(() => {
     renderCanvas();
@@ -70,24 +60,6 @@ export default function Hero(): ReactElement {
                 </Link>
               </div>
             </div>
-            <motion.div
-              animate={{
-                transform: `translateY(${progress * 10}vh)`,
-              }}
-              className="absolute bottom-4 left-1/2 -translate-x-1/2 transform md:bottom-8"
-            >
-              <div
-                role="presentation"
-                className="flex cursor-pointer flex-col items-center justify-center"
-                onClick={() => {
-                  const intro = document.querySelector('#intro');
-
-                  intro?.scrollIntoView({ behavior: 'smooth' });
-                }}
-              >
-                {/* <HiOutlineArrowNarrowDown size={20} /> */}
-              </div>
-            </motion.div>
           </div>
         </div>
       </div>
