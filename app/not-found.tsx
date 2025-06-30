@@ -1,4 +1,4 @@
-import Link from '@/components/Link';
+import Link from 'next/link';
 import SectionContainer from '@/components/SectionContainer';
 
 // TODO: Comment out when https://github.com/vercel/next.js/issues/50566 is fixed.
@@ -21,7 +21,12 @@ export default function FourZeroFour() {
           Sorry we couldn't find this page.
         </p>
         <p className="mb-8">But dont worry, you can find plenty of other things on our homepage.</p>
-        <Link href="/">Back to homepage</Link>
+        <Link
+          href="/"
+          className="underline-magical text-md w-max cursor-pointer sm:text-lg md:text-xl xl:text-2xl"
+        >
+          Back to homepage &rarr;
+        </Link>
       </div>
     </SectionContainer>
   );

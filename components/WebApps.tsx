@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-export default function Intro() {
+export default function WebApps() {
   const links = [
     { href: 'https://www.rayos.ai/idea-gpt', text: 'IdeaGPT' },
     // { href: '../pages/eye_tracking/index.html', text: 'WebGazer Eye Tracking' },

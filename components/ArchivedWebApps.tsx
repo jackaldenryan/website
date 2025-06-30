@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-export default function Intro() {
+export default function ArchivedWebApps() {
   const links = [
     { href: '../../pages/eye_tracking/index.html', text: 'WebGazer Eye Tracking' },
     { href: 'https://tinyurl.com/multifractal-jackryan', text: 'Multifractal Spectrum Calculator' },
