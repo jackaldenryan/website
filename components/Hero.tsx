@@ -15,7 +15,7 @@ export default function Hero(): ReactElement {
   return (
     <div>
       <h1 className="sr-only">
-        Hello I'm Jack Ryan, I'm a recent Stanford graduate in Math & Computer Science.
+        Hello I'm Jack Ryan, I'm a software engineer at Zep AI, ex-Stanford.
       </h1>
       <div className="relative z-10 flex h-[calc(100vh-81px)] items-center md:h-[calc(100vh-116px)]">
         <div className="mx-auto w-screen max-w-3xl px-4 sm:px-9 xl:max-w-5xl xl:px-0">
@@ -25,12 +25,13 @@ export default function Hero(): ReactElement {
                 Jack Ryan
               </h1>
               <h2 className="text-3xl font-medium opacity-80 sm:text-3xl md:text-4xl xl:text-5xl">
-                I'm a recent Stanford graduate in Math & Computer Science.
+                Software Engineer at <a href="https://www.getzep.com" target="_blank" rel="noopener noreferrer" className="text-purple-500 hover:underline cursor-pointer">Zep AI</a>, ex-Stanford.
               </h2>
               <div className="flex flex-row space-x-4">
                 <Link
                   href="/CV.pdf"
                   className="underline-magical text-md w-max cursor-pointer sm:text-lg md:text-xl xl:text-2xl"
+                  style={{ color: 'white' }}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -39,12 +40,14 @@ export default function Hero(): ReactElement {
                 <Link
                   href="/webapps"
                   className="underline-magical text-md w-max cursor-pointer sm:text-lg md:text-xl xl:text-2xl"
+                  style={{ color: 'white' }}
                 >
                   Web Apps &rarr;
                 </Link>
                 <Link
                   href="https://www.linkedin.com/in/jackaldenryan/"
                   className="underline-magical text-md w-max cursor-pointer sm:text-lg md:text-xl xl:text-2xl"
+                  style={{ color: 'white' }}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -53,6 +56,7 @@ export default function Hero(): ReactElement {
                 <Link
                   href="https://github.com/jackaldenryan"
                   className="underline-magical text-md w-max cursor-pointer sm:text-lg md:text-xl xl:text-2xl"
+                  style={{ color: 'white' }}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
