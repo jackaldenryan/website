@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+
+Host: https://jackaldenryan.com
+Sitemap: https://jackaldenryan.com/sitemap.xml

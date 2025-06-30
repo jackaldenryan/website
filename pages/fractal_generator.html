@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TQT8X3KZPB"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-TQT8X3KZPB');
+    </script>
+    
+	<title>Fractal Generator</title>
+    <link rel="stylesheet" type="text/css" href="styles_toys.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <h1 class="ctitle" style>Fractal Generator</h1>
+        </div>
+        <div class="row button-container">
+            <label for="fractal-depth" class="interaction-label">Select Fractal Depth:</label>
+            <select id="fractal-depth" onchange="updateIframe()">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+            <label for="random-bool" class="interaction-label">&nbsp;&nbsp;Randomly remove triangles?:</label>
+            <select id="random-bool" onchange="updateIframe()">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+            </select>
+            <label for="size" class="interaction-label">&nbsp;&nbsp;Size:</label>
+            <input type="number" id="size" name="number-input" value="500" min="1" max="1000" onchange="updateIframe()">
+            <label for="color-picker" class="interaction-label">&nbsp;&nbsp;Colors:</label>
+            <input type="color" id="color1" name="color-picker" value="#00ffcc" onchange="updateIframe()">
+            <input type="color" id="color2" name="color-picker" value="#d4ff00" onchange="updateIframe()">
+            <input type="color" id="color3" name="color-picker" value="#001eff" onchange="updateIframe()">
+            <br>
+            <br>
+        </div>
+        <div class="row iframe-container">
+            <iframe id="sierpinski-frame" src="about:blank" frameborder="0" scrolling="no" width="1000" height="1000"></iframe>
+        </div>
+        <br>
+        <br>
+        <div class="row notes">
+            <p>Notes:</p>
+            <ul>
+                <li>Random removal means that instead of removing the middle (upside-down) triangle each time, you remove a random one of the possible four.</li>
+                <li>Colors are assigned at random.</li>
+                <li>You can use the arrows in the size box to quickly cycle through random fractals.</li>
+                <li>Question: how long should we expect the longest contiguous side to be when random removal is on as a function of depth?</li>
+                <li>Question: what's the probability that the triangles will form one connected unit (triangles tip to tip counts as being connected) as a function of depth?</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+<script>
+    window.addEventListener('load', function() {
+        updateIframe();
+    });
+
+    function updateIframe() {
+        var depth = document.getElementById("fractal-depth").value;
+        var randomBool = (document.getElementById("random-bool").value == "Yes");
+        var color1 = document.getElementById("color1").value;
+        var color2 = document.getElementById("color2").value;
+        var color3 = document.getElementById("color3").value;
+        var colors = [color1, color2, color3];
+        var sideLength = parseInt(document.getElementById("size").value);
+        var iframe = document.getElementById("sierpinski-frame");
+
+        iframe.width = sideLength
+        iframe.height = sideLength
+        
+        var canvas = document.createElement('canvas');
+        canvas.width = sideLength;
+        canvas.height = sideLength;
+        var ctx = canvas.getContext('2d');
+        
+        sierpinski(depth, 0, sideLength, sideLength / 2, 0, sideLength, sideLength, randomBool, colors, ctx);
+
+        var dataURI = canvas.toDataURL();
+        iframe.src = dataURI;
+    }
+
+    function sierpinski(depth, x1, y1, x2, y2, x3, y3, randomBool, colors, ctx) {
+        if (depth == 0) {
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.lineTo(x3, y3);
+            ctx.stroke();
+            randomInt1 = getRandomInt(3)
+            ctx.fillStyle = colors[randomInt1];
+            ctx.fill();
+        } else {
+            var x4 = (x1 + x2) / 2;
+            var y4 = (y1 + y2) / 2;
+            var x5 = (x2 + x3) / 2;
+            var y5 = (y2 + y3) / 2;
+            var x6 = (x1 + x3) / 2;
+            var y6 = (y1 + y3) / 2;
+            if (randomBool) {
+                randomInt2 = getRandomInt(4)
+                if (randomInt2 == 0) {
+                    sierpinski(depth - 1, x4, y4, x2, y2, x5, y5, randomBool, colors, ctx);
+                    sierpinski(depth - 1, x6, y6, x5, y5, x3, y3, randomBool, colors, ctx);
+                    sierpinski(depth - 1, x6, y6, x4, y4, x5, y5, randomBool, colors, ctx);
+                } else if (randomInt2 == 1) {
+                    sierpinski(depth - 1, x1, y1, x4, y4, x6, y6, randomBool, colors, ctx);
+                    sierpinski(depth - 1, x6, y6, x5, y5, x3, y3, randomBool, colors, ctx);
+                    sierpinski(depth - 1, x6, y6, x4, y4, x5, y5, randomBool, colors, ctx);
+                } else if (randomInt2 == 2) {
+                    sierpinski(depth - 1, x1, y1, x4, y4, x6, y6, randomBool, colors, ctx);
+                    sierpinski(depth - 1, x4, y4, x2, y2, x5, y5, randomBool, colors, ctx);
+                    sierpinski(depth - 1, x6, y6, x4, y4, x5, y5, randomBool, colors, ctx);
+                } else {
+                    sierpinski(depth - 1, x1, y1, x4, y4, x6, y6, randomBool, colors, ctx);
+                    sierpinski(depth - 1, x4, y4, x2, y2, x5, y5, randomBool, colors, ctx);
+                    sierpinski(depth - 1, x6, y6, x5, y5, x3, y3, randomBool, colors, ctx);
+                }
+            } else {
+                sierpinski(depth - 1, x1, y1, x4, y4, x6, y6, randomBool, colors, ctx);
+                sierpinski(depth - 1, x4, y4, x2, y2, x5, y5, randomBool, colors, ctx);
+                sierpinski(depth - 1, x6, y6, x5, y5, x3, y3, randomBool, colors, ctx);
+            }
+        }
+    }
+
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+    }
+</script>
+</html>
+
+

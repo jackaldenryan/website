@@ -1,0 +1,6 @@
+# Put this file in public_html to redirect "jackaldenryan.com//" 
+# to "jackaldenryan.com/"
+
+RewriteEngine On
+RewriteCond %{THE_REQUEST} //
+RewriteRule .* /$0 [R=301,L]
