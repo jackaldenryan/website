@@ -1,13 +1,13 @@
 'use client';
 
 import classNames from 'classnames';
-import headerNavLinks from 'content/headerNavLinks';
+// import headerNavLinks from 'content/headerNavLinks';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import CommandPalette from './CommandPalette/CommandPalette';
-import MobileNav from './MobileNav';
+// import CommandPalette from './CommandPalette/CommandPalette';
+// import MobileNav from './MobileNav';
 import SectionContainer from './SectionContainer';
-import ThemeSwitch from './ThemeSwitch';
+// import ThemeSwitch from './ThemeSwitch';
 
 export default function Header() {
   const pathName = usePathname();
@@ -27,10 +27,10 @@ export default function Header() {
               )}
               aria-label="d."
             >
-              d.
+              J.R.
             </Link>
           </div>
-          <div className="flex items-center space-x-3 text-base leading-5">
+          {/* <div className="flex items-center space-x-3 text-base leading-5">
             <div className="hidden space-x-5 sm:flex">
               {headerNavLinks.map(({ title, href }) => {
                 const active = pathName?.includes(href);
@@ -56,7 +56,7 @@ export default function Header() {
               <ThemeSwitch />
               <MobileNav />
             </div>
-          </div>
+          </div> */}
         </div>
       </header>
     </SectionContainer>

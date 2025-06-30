@@ -3,7 +3,14 @@ import path from 'path';
 import GithubSlugger from 'github-slugger';
 import { escape } from './htmlEscaper.mjs';
 import siteMetadata from '../content/siteMetadata.js';
-import { allBlogs } from '../.contentlayer/generated/index.mjs';
+// import { allBlogs } from '../.contentlayer/generated/index.mjs';
+
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const { allBlogs } = await import(
+  path.join(__dirname, '..', '.contentlayer', 'generated', 'index.mjs')
+);
 
 export async function getAllTags() {
   const tagCount = {};

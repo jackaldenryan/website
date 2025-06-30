@@ -1,0 +1,67 @@
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    Fira Sans,
+    Droid Sans,
+    Helvetica Neue,
+    sans-serif;
+  margin: 0;
+}
+code {
+  font-family:
+    source-code-pro,
+    Menlo,
+    Monaco,
+    Consolas,
+    Courier New,
+    monospace;
+}
+:root {
+  --menu-color: #000;
+}
+.App {
+  align-items: center;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+}
+.transform-selection {
+  margin-bottom: 20px;
+  position: relative;
+}
+.transform-selection select {
+  background-color: #fff;
+  border: 2px solid #000;
+  border: 2px solid var(--menu-color);
+  border-radius: 4px;
+  color: #000;
+  color: var(--menu-color);
+  cursor: pointer;
+  font-size: 16px;
+  outline: none;
+  padding: 5px 30px 5px 10px;
+}
+.drawing-board-container,
+.fourier-transform-container {
+  background-color: #fff;
+  margin: 0;
+  padding: 0 10px;
+}
+canvas {
+  background-color: #fff;
+  border: 1px solid #000;
+}
+.drawing-board-container canvas {
+  cursor: crosshair;
+}
+/*# sourceMappingURL=main.0c5b01fa.css.map*/
