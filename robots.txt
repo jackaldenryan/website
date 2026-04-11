@@ -1,5 +1,5 @@
 User-Agent: *
 Allow: /
 
-Host: https://jackaldenryan.com
-Sitemap: https://jackaldenryan.com/sitemap.xml
+Host: https://therealjackryan.com
+Sitemap: https://therealjackryan.com/sitemap.xml

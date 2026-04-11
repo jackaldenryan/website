@@ -1,5 +1,5 @@
-# Put this file in public_html to redirect "jackaldenryan.com//" 
-# to "jackaldenryan.com/"
+# Put this file in public_html to redirect "therealjackryan.com//" 
+# to "therealjackryan.com/"
 
 RewriteEngine On
 RewriteCond %{THE_REQUEST} //
