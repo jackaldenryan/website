@@ -1,0 +1,56 @@
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    Fira Sans,
+    Droid Sans,
+    Helvetica Neue,
+    sans-serif;
+  margin: 0;
+}
+code {
+  font-family:
+    source-code-pro,
+    Menlo,
+    Monaco,
+    Consolas,
+    Courier New,
+    monospace;
+}
+.App {
+  background-color: #fff;
+  flex-direction: column;
+  margin: 0;
+}
+.App,
+.input-form {
+  align-items: center;
+  display: flex;
+}
+.input-form {
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.input-form label {
+  color: #000;
+  margin: 0 10px;
+}
+input {
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 4px;
+  color: #000;
+  margin-left: 4px;
+  padding: 4px 6px;
+}
+canvas {
+  display: block;
+}
+/*# sourceMappingURL=main.d7b8d184.css.map*/

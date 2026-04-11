@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TQT8X3KZPB"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-TQT8X3KZPB');
+    </script>
+    
+    <title>Multifractal Calculator</title>
+    <link rel="stylesheet" type="text/css" href="styles_toys.css">
+    <link rel="stylesheet" type="text/css" href="../react_apps/multifractal_tool/build/static/css/main.f4d465bc.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h1 class="ctitle" style>Mulitfractal Calculator</h1>
+        </div>
+
+        <p>Explore fourier and multifractal analyses, with different kinds of noise or with custom noise:</p>
+
+        <div id="root"></div>
+        <script src="../react_apps/multifractal_tool/build/static/js/main.e4186170.js"></script>
+
+        <div class="row notes">
+            <p>Notes:</p>
+            <ul>
+              <li>For creating custom noise, I recommend using Google Sheets. Make sure t-values are in the first column, y-values in the second, and then export as a csv.</li>
+              <li>Sometimes the tool breaks, I may or may not try to fix that someday.</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

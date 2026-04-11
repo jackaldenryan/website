@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TQT8X3KZPB"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-TQT8X3KZPB');
+    </script>
+    
+    <title>Fourier Drawing</title>
+    <link rel="stylesheet" type="text/css" href="styles_toys.css">
+    <link rel="stylesheet" type="text/css" href="../react_apps/fourier_drawing/build/static/css/main.0c5b01fa.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h1 class="ctitle" style>Fourier Transform of a Drawn Curve</h1>
+        </div>
+
+        <p>Draw a function and see it's discrete fourier transform or one of its* inverse discrete fourier transforms!</p>
+
+        <div id="root"></div>
+        <script src="../react_apps/fourier_drawing/build/static/js/main.e222b495.js"></script>
+
+        <div class="row notes">
+            <p>Notes:</p>
+            <ul>
+                <li>*Typically, an inverse discrete fourier transform takes in a sequence of complex numbers and returns a sequence of real numbers. To deal with this, this function interprets any drawn function as representing a sequence of magnitudes of complex numbers, and for each item of the sequence, it computes a random complex number of that magnitude; then, with this derived sequence of complex numbers, the inverse discrete fourier transform is computed and displayed.</li>
+                <li>I'm a bit disappointed by this project; I was motivated by wanting to better understand things like 1/f "pink" noise, and it felt like having better intuitions about forward and inverse fourier transforms would help with that. But the tool is kind of boring and hasn't given me good intuitions. Part of that is because I haven't yet gotten around to making the drawn curve be repeated infinitely to the left and right (which should make the fourier transform more interesting).</li>
+                <li>I was substantially helped by ChatGPT 4, and I feel sort of bad for not better understanding how this code actually works; on the other hand, by relying on ChatGPT, I get to focus on strengthening skills that aren't replaceable and will actually be needed in a real project.</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

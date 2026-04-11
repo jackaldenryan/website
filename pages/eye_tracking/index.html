@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-TQT8X3KZPB"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-TQT8X3KZPB');
+        </script>
+        
+        <title>Eye Tracking</title>
+        <script src="WebGazer-master/dist/webgazer.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="styles_eye.css">
+        <style>
+            /* The Modal (background) */
+            .modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 9999; /* Sit on top */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+
+            /* Modal Content/Box */
+            .modal-content {
+                background-color: #fefefe;
+                margin: 4% auto; /* 15% from the top and centered */
+                padding: 20px;
+                border: 1px solid #888;
+                width: 80%; /* Could be more or less, depending on screen size */
+            }
+
+            /* The Close Button */
+            .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>WebGazer Eye Tracking for Psychology Experiments</h1>
+
+        <div>
+            <label for="timeout">Auto-stop countdown duration (seconds): </label>
+            <input type="number" id="timeout" name="timeout" step="1.000" value="10">
+        </div>
+        <div>
+            <label for="timeout">Measurement interval (milliseconds; <100ms doesn't work properly): </label>
+            <input type="number" id="measure_int" name="measure_int" min="100" step="10" value="100">
+        </div>
+
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>
+                    Welcome to the eye tracking tool I am building on top of WebGazer.js! The intended use case for this tool is for gathering several trials of eye movement data from participants. 
+                    <br>
+                    <br>
+                    <strong>Basic steps of usage:</strong>
+                    <ol>
+                        <li>Set your desired trial length with Auto-stop countdown duration.</li>
+                        <li>Set your desired measurement interval (at least 100ms for now).</li>
+                        <li>Click Start Tracking</li>
+                        <li>Allow camera access</li>
+                        <li>Calibrate the gaze prediction model by keeping your head in the green square shown in the video stream, keeping your eyes on the cursor, and pretending to click (e.g.) nine imaginary dots on the screen (e.g. see here: https://webgazer.cs.brown.edu/calibration.html?) </li>
+                        <li>Click Begin auto-stop countdown when you are ready to start measurement, or click Stop tracking to manually stop tracking.</li>
+                        <li>After the tracking ends, click Download data and/or Download audio.</li>
+                        <li>Throughout tracking, use the Marker buttons to set markers for certain timestamps that will appear in the final CSV.</li>
+                        <li>As another form of annotating the data, use the audio recording functionality (audio recording also auto-stops at end of countdown)</li>
+                    </ol>
+                    <strong>Other important notes:</strong>
+                    <ul>
+                        <li>To run an experiment, I recommend minimizing the window for this tool and dragging a separate window with your desired stimuli over and ontop of it. For experimental purposes, the positions of both windows should be perfectly replicated to get the same type of data.</li>
+                        <li>You can (but maybe shouldn't, see below) gather multiple separate trials of data without refreshing the page by clicking Start, Stop, Start, Stop, etc.</li>
+                        <li>As of now, the gaze prediction model is saved between trials, so for scientific purposes, in order to keep measurement conditions the same, separate trials should be gathered after refreshing the page (meaning you will have to collect separate CSVs, sadly).</li>
+                        <li>In the CSV, the time differences aren't perfect because parts of the program have unpredictable execution times, and I'm not aware of an easy way to fix this.</li>
+                        <li>I did not create the gaze predictor, I only wrote a bit of code on top of it that might make WebGazer suitable for psychology research. All credit for the gaze predictor belongs to the developers of WebGazer.js: https://webgazer.cs.brown.edu/</li>
+                        <li>My understanding of WebGazer.js is that it uses a combination of your facial features, cursor movements, and cursor clicks to predict your gaze.</li>
+                        <li>The original intention of this project was to use WebGazer to obtain data that multifractal analysis could be applied to, but it is still unclear to us whether WebGazer is accurate enough for finding statistically significant (multifractal) patterns.</li>
+                    </ul>
+                    <strong>Known bugs:</strong>
+                    <ul>
+                        <li>You can't record more than one audio file without refreshing the page.</li>
+                        <li>Sometimes the first few data points in a trial aren't what they should be (e.g. Time is zero for 2nd row, or Time is very large initially), so generally those points should be cut off from analysis</li>
+                    </ul>
+                    <strong>Citation information:</strong>
+                    <br>
+                    <br>
+                    If you're using this eye-tracking tool for your research, please cite both me and WebGazer.js. Example for this site:
+                    <br>
+                    <br>
+                    Jack Ryan. (2023). WebGazer Eye Tracking for Psychology Experiments. August 1, 2023 version. Retrieved from https://jackaldenryan.com/pages/eye_tracking/eye_tracking.html.
+                    <br>
+                    <br>
+                    Visit the WebGazer <a href="https://webgazer.cs.brown.edu/">website</a> for their citation info.
+                </p>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button style="z-index:9000;" id="start">Start tracking</button>
+            <button style="z-index:9000;" id="stop">Stop tracking</button>
+            <button style="z-index:9000;" id="auto_stop">Begin auto-stop countdown</button>
+            <button style="z-index:9000;" id="startAudio">Start audio recording</button>
+            <button style="z-index:9000;" id="stopAudio">Stop audio recording</button>
+            <button style="z-index:9000;" id="marker1">Marker 1</button>
+            <button style="z-index:9000;" id="marker2">Marker 2</button>
+            <button style="z-index:9000;" id="marker3">Marker 3</button>
+            <button style="z-index:9000;" id="download">Download data</button>
+            <button style="z-index:9000;" id="downloadAudio">Download audio</button>
+        </div>
+
+        <script>
+        (function() {
+            let records = []; // 3D array: Data type (time, distance, notes) -> Session
+            let session = -1; // Start session index at 0
+            let lastPoint = null;
+            let timerId = null;
+            let trackingIntervalId = null;
+            let isAutoStopBegun = false;
+            let mediaRecorder;
+            let audioBlobs = [];
+
+            function startTracking() {
+                session++;
+                let measurementInterval = parseFloat(document.getElementById("measure_int").value);
+
+                window.saveDataAcrossSessions = false; //Does nothing?
+
+                webgazer.begin().then(function() {
+                    var video = document.getElementById('webgazerVideoFeed');
+                    var overlay = document.getElementById('webgazerFaceOverlay');
+
+                    video.style.display = 'default';
+                    overlay.style.display = 'default';
+
+                    document.getElementById('webgazerFaceFeedbackBox').style.display = 'default';
+                });
+
+                trackingIntervalId = setInterval(function(){
+                    webgazer.getCurrentPrediction().then(function(prediction) {
+                        if(prediction) {
+                            let time = performance.now();
+                            let predictionX = prediction.x;
+                            let predictionY = prediction.y;
+                            let euclideanDistance = null;
+                            if(lastPoint !== null) {
+                                euclideanDistance = Math.sqrt(Math.pow(lastPoint.x - predictionX, 2) + Math.pow(lastPoint.y - predictionY, 2));
+                            }
+                            addRecord(session, time, predictionX, predictionY, euclideanDistance, "");
+                            lastPoint = prediction;
+                        }
+                    });
+                }, measurementInterval);
+            }
+
+            function addRecord(session, time, x, y, distance, note) {
+                while (records.length <= session) {
+                    records.push([]);
+                }
+                while (records[session].length < 5) {
+                    records[session].push([]);
+                }
+                records[session][0].push(time);
+                records[session][1].push(x);
+                records[session][2].push(y);
+                records[session][3].push(distance);
+                records[session][4].push(note);
+            }
+
+            function stopTracking() {
+                // Uncomment this to make stop tracking also stop audio recording
+                // if (mediaRecorder && mediaRecorder.state === 'recording') {
+                //     mediaRecorder.stop();
+                // }
+                if (timerId !== null) {
+                    clearTimeout(timerId);
+                    timerId = null;
+                }
+
+                if (trackingIntervalId !== null) {
+                    clearInterval(trackingIntervalId);
+                    trackingIntervalId = null;
+                }
+
+                webgazer.clearGazeListener();
+                webgazer.end();
+                isAutoStopBegun = false;
+                lastPoint = null;
+                // session++;
+            }
+
+            function setMarker1() {
+                addRecord(session, performance.now(), null, null, null, "Marker 1");
+            }
+
+            function setMarker2() {
+                addRecord(session, performance.now(), null, null, null, "Marker 2");
+            }
+
+            function setMarker3() {
+                addRecord(session, performance.now(), null, null, null, "Marker 3");
+            }
+
+            function setAutoStopBegun() {
+                let timeoutLength = parseFloat(document.getElementById("timeout").value) * 1000;
+
+                addRecord(session, performance.now(), null, null, null, "Auto-stop countdown begun");
+                if (!isAutoStopBegun) {
+                    timerId = setTimeout(function() {
+                        stopTracking();
+                        stopAudioRecording();
+                    }, timeoutLength);
+                    isAutoStopBegun = true;
+                }
+            }
+
+
+            // Previously part of above function. To return, remove commenting and remove two prev curly braces
+            //         navigator.mediaDevices.getUserMedia({ audio: true })
+            //         .then(stream => {
+            //             mediaRecorder = new MediaRecorder(stream);
+            //             mediaRecorder.start();
+
+            //             mediaRecorder.ondataavailable = function(event) {
+            //                 audioBlobs.push(event.data);
+            //             };
+            //         });
+            //     }
+            // }
+
+            function startAudioRecording() {
+                if (!mediaRecorder) {
+                    navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then(stream => {
+                        mediaRecorder = new MediaRecorder(stream);
+                        mediaRecorder.start();
+
+                        mediaRecorder.onstart = function() {
+                            console.log('MediaRecorder started');
+                        };
+                        
+                        mediaRecorder.onerror = function(event) {
+                            console.log('MediaRecorder error:', event);
+                        };
+
+                        mediaRecorder.ondataavailable = function(event) {
+                            console.log('MediaRecorder data available:', event);
+                            audioBlobs.push(event.data);
+                        };
+                    });
+                } else if (mediaRecorder.state !== 'recording') {
+                    mediaRecorder.start();
+                }
+            }
+
+
+            function stopAudioRecording() {
+                if (mediaRecorder && mediaRecorder.state === 'recording') {
+                    mediaRecorder.stop();
+                }
+            }
+
+            function downloadData() {
+                // CSV Headers
+                let headers = [];
+                for(let i = 0; i < records.length; i++) {
+                    headers.push(`Time from trial start (Trial ${i+1})`);
+                    headers.push(`Time gap of consecutive points (Trial ${i+1})`);
+                    headers.push(`Gaze X position (Trial ${i+1})`);
+                    headers.push(`Gaze Y position (Trial ${i+1})`);
+                    headers.push(`Euclidean distance of consecutive points (Trial ${i+1})`);
+                    headers.push(`Markers (Trial ${i+1})`);
+                }
+                let csvContent = headers.join(",") + "\n";
+
+                // Find max length of records for column uniformity
+                let maxLength = Math.max(...records.flatMap(sessionRecords => sessionRecords.map(array => array.length)));
+
+                // Iterate through each session
+                for(let j = 0; j < records.length; j++) {
+                    // Get start time of the current session
+                    let startTime = records[j][0][0];
+                    // Subtract the start time from all timestamps in the current session so that times are relative
+                    for(let i = 0; i < records[j][0].length; i++) {
+                        let newTime = records[j][0][i] - startTime;
+                        records[j][0][i] = newTime;
+                    }
+                }
+
+                // Iterate through each row
+                for(let i = 0; i < maxLength; i++) {
+                    let row = [];
+                    // Iteratre through each session
+                    for(let j = 0; j < records.length; j++) {
+                        // Add time
+                        let time = records[j][0][i];
+                        row.push(time);
+                        
+                        // Compute and add time difference, if not the first record (i == 0) and both current and previous timestamps exist
+                        let timeDiff = i == 0 || time === undefined ? "" : Math.round(time - records[j][0][i-1]);
+                        row.push(timeDiff);
+                        row.push(records[j][1][i]);
+                        row.push(records[j][2][i]);
+                        row.push(records[j][3][i]);
+                        row.push(`"${records[j][4][i] || ""}"`);
+                    }
+                    csvContent += row.join(",") + "\n";
+                }
+
+                let blob = new Blob([csvContent], { type: 'text/csv' });
+                let url = window.URL.createObjectURL(blob);
+                let a = document.createElement('a');
+                a.href = url;
+                a.download = 'eye_gaze_data.csv';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+
+            function downloadAudio() {
+                let blob = new Blob(audioBlobs, { type: 'audio/webm' });
+                let url = window.URL.createObjectURL(blob);
+                let a = document.createElement('a');
+                a.href = url;
+                a.download = 'audio_recording.webm';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+
+            //Make the functions available in global scope
+            window.startTracking = startTracking;
+            window.stopTracking = stopTracking;
+            window.setMarker1 = setMarker1;
+            window.setMarker2 = setMarker2;
+            window.setMarker3 = setMarker3;
+            window.setAutoStopBegun = setAutoStopBegun;
+            window.startAudioRecording = startAudioRecording;
+            window.stopAudioRecording = stopAudioRecording;
+            window.downloadData = downloadData;
+            window.downloadAudio = downloadAudio;
+
+            document.getElementById("start").addEventListener("click", startTracking);
+            document.getElementById("stop").addEventListener("click", stopTracking);
+            document.getElementById("marker1").addEventListener("click", setMarker1);
+            document.getElementById("marker2").addEventListener("click", setMarker2);
+            document.getElementById("marker3").addEventListener("click", setMarker3);
+            document.getElementById("auto_stop").addEventListener("click", setAutoStopBegun);
+            document.getElementById("startAudio").addEventListener("click", startAudioRecording);
+            document.getElementById("stopAudio").addEventListener("click", stopAudioRecording);
+            document.getElementById("download").addEventListener("click", downloadData);
+            document.getElementById("downloadAudio").addEventListener("click", downloadAudio);
+        })();
+
+        window.onload = function() {
+            // Get the modal
+            var modal = document.getElementById("myModal");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+              modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+              if (event.target == modal) {
+                modal.style.display = "none";
+              }
+            }
+
+            // Show the modal
+            modal.style.display = "block";
+        }
+        </script>
+    </body>
+</html>
