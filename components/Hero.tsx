@@ -33,7 +33,7 @@ export default function Hero(): ReactElement {
                 >
                   Zep AI
                 </a>
-                , Stanford MS '24.
+                .
               </h2>
               <div className="flex flex-row space-x-4">
                 <Link

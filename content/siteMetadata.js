@@ -2,7 +2,7 @@ const siteMetadata = {
   title: 'Jack Ryan',
   author: 'Jack Ryan',
   headerTitle: 'jackryan',
-  description: 'Member of Technical Staff at Zep AI, Stanford MS 24',
+  description: 'Member of Technical Staff at Zep AI',
   language: 'en-us',
   theme: 'dark', // system, dark or light
   siteUrl: 'https://therealjackryan.com',
