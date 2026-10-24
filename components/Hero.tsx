@@ -46,13 +46,6 @@ export default function Hero(): ReactElement {
                   Curriculum Vitae &rarr;
                 </Link>
                 <Link
-                  href="/webapps"
-                  className="underline-magical text-md w-max cursor-pointer sm:text-lg md:text-xl xl:text-2xl"
-                  style={{ color: 'white' }}
-                >
-                  Web Apps &rarr;
-                </Link>
-                <Link
                   href="https://www.linkedin.com/in/therealjackryan/"
                   className="underline-magical text-md w-max cursor-pointer sm:text-lg md:text-xl xl:text-2xl"
                   style={{ color: 'white' }}
