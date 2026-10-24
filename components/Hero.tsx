@@ -29,7 +29,7 @@ export default function Hero(): ReactElement {
                   href="https://www.getzep.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-purple-500 hover:underline cursor-pointer"
+                  className="text-blue-500 hover:underline cursor-pointer"
                 >
                   Zep AI
                 </a>
