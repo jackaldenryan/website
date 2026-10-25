@@ -37,13 +37,13 @@ export default function Hero(): ReactElement {
               </h2>
               <div className="flex flex-row space-x-4">
                 <Link
-                  href="/CV.pdf"
+                  href="/resume.pdf"
                   className="underline-magical text-md w-max cursor-pointer sm:text-lg md:text-xl xl:text-2xl"
                   style={{ color: 'white' }}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Curriculum Vitae &rarr;
+                  Résumé &rarr;
                 </Link>
                 <Link
                   href="https://www.linkedin.com/in/therealjackryan/"
